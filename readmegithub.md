@@ -17,7 +17,7 @@ git push -u origin main
 git branch
 git checkout main
 git add .
-git commit -m "02 - routes and controller folders created, cleaned up boiler plate"
+git commit -m "03:80 - CRUD via mongo dd, created models, added express-async-errors"
 git push -u origin main
 ```
 
@@ -26,8 +26,8 @@ git push -u origin main
 - -donbt forget to puch to the new branch
 
 ```ts
-git checkout -b 01-dev
-git push -u origin 01-dev
+git checkout -b 02-dev
+git push -u origin 02-dev
 ```
 
 - Now swith to main and pull from github

@@ -1,98 +1,60 @@
-import { nanoid } from 'nanoid'
+import JobModel from '../models/JobModel.js'
 
-let jobs = [
-  { id: 'JZ8eo3R-6zdc_2sOCldLE', company: 'apple', position: 'front-end' },
-  { id: 'Z9Iw8Eyq7eQzcZsxorSBO', company: 'google', position: 'back-end' },
-  // { id: 'Ab9XyKpQv7TfL2MeRs81', company: 'google', position: 'back-end' },
-  // { id: 'Qz8LmNoPq3WeRt4YuGh52', company: 'microsoft', position: 'full-stack' },
-]
-
-// get ALL JOBS
 // get ALL JOBS
 // get ALL JOBS
 export const getAllJobs = async (req, res) => {
+  const jobs = await JobModel.find({})
+  console.log('AllJobs :', jobs)
+
   res.status(200).json({ jobs })
 }
 
 // Get JOB
 // Get JOB
-// Get JOB
 export const getSingleJob = async (req, res) => {
   const { params } = req
-  if (!params.id) {
-    return res
-      .status(400)
-      .json({ message: 'please provide an id to get single job' })
+  const job = await JobModel.findById(params.id)
+  if (!job) {
+    return res.status(404).json({ msg: `no job with that${id}` })
   }
-
-  const singleJob = jobs.find((job) => job.id === params.id)
-  if (!singleJob) {
-    return res.status(404).json({ message: `No job with id:${id}` })
-  }
-
-  res.status(200).json({ singleJob })
+  res.status(200).json({ job })
 }
 
-// Create JOB
-// Create JOB
-// Create JOB
+// Create JOB  -  Create JOB
+// Create JOB  -  Create JOB
 export const createJob = async (req, res) => {
-  const { company, position } = req.body
-  if (!company || !position) {
-    return res
-      .status(201)
-      .json({ message: 'please proide company and positin' })
-  }
-  const id = nanoid()
-  const job = { id, company, position }
-  jobs.push(job)
+  const job = await JobModel.create(req.body)
   res.status(201).json({ job })
+  //we will use express-error-validator to catch generic catch and try errors in the error middleware
 }
 
-// Delele JOB
-// Delele JOB
-// Delele JOB
+// Delele JOB - Delele JOB
+// Delele JOB - Delele JOB
 export const deleteJob = async (req, res) => {
   const { params } = req
-  if (!params.id) {
-    return res
-      .status(400)
-      .json({ message: 'please provide an id! to delete job' })
-  }
-  const jobToDelete = jobs.find((job) => job.id === params.id)
-  if (!jobToDelete) {
-    return res.status(404).json({ message: 'No job with that id!!' })
-  }
 
-  const newJobs = jobs.filter((job) => job.id !== params.id)
-  res.status(200).json({ msg: 'Job deleted' })
+  const deletedJob = await JobModel.findByIdAndDelete(params.id)
+
+  if (!deletedJob) {
+    return res.status(404).json({ msg: `no job with id ${id}` })
+  }
+  res.status(200).json({ msg: 'Job deleted' }, deletedJob)
 }
 
-// update JOB
-// update JOB
-// update JOB
+// Update JOB - Update JOB
+// Update JOB - Update JOB
 export const updateJob = async (req, res) => {
-  const { company, position } = req.body
-  if (!company || !position) {
-    return res.status(400).json({ message: 'No job with that id!!' })
-  }
-
   const { id } = req.params
-  let jobToUpdate = jobs.find((job) => job.id === id)
-  if (!jobToUpdate) {
-    return res.status(404).json({ message: 'No job with that id!!' })
-  }
-  // alright this doesnt change the object!! frank, basis please!
-  // this just gives a copy back!!
-  //   const updatedJob = {
-  //     ...jobToUpdate,
-  //     company,
-  //     position,
-  //   }
-  //   res.status(200).json({ message: 'Job Updated', updatedJob })
-  // })
 
-  jobToUpdate.company = company
-  jobToUpdate.position = position
-  res.status(200).json({ message: 'Job Updated', jobToUpdate })
+  const updatedJob = await JobModel.findByIdAndUpdate(
+    id,
+    {
+      ...req.body, //or just id,req.body,{new:true}
+    },
+    { new: true } //this will send us the updated job back, and i thpught it was a bug
+  )
+  if (!updatedJob) {
+    return res.status(404).json({ msg: `no job with id ${id}` })
+  }
+  res.status(200).json({ message: 'Job Updated', updatedJob })
 }
