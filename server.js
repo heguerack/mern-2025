@@ -10,6 +10,7 @@ import { config } from 'dotenv'
 config()
 
 import JobRouter from './routes/jobRouter.js'
+import { errorHandlerMiddleware } from './middleware/errorHandlerMiddleware.js'
 
 if (process.env.NODE_ENV === 'development') {
   //=> NODE_ENV  = "production"  when deployed
@@ -24,10 +25,11 @@ app.use('*', (req, res) => {
   res.status(404).json({ msg: 'Not Found' })
 })
 
-app.use((err, req, res, next) => {
-  console.log(err)
-  res.status(500).json({ message: 'Internal error - something went wrong' })
-})
+// app.use((err, req, res, next) => {
+//   console.log(err)
+//   res.status(500).json({ message: 'Internal error - something went wrong' })
+// })
+app.use(errorHandlerMiddleware)
 
 //remember we dont need to create and async funtion anymore! :)
 const port = process.env.PORT || 5100
