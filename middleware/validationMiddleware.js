@@ -1,9 +1,15 @@
 import { body, param, validationResult } from 'express-validator'
-import { BadRequestError, NotFoundError } from '../errors/customErrors.js'
-import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js'
+import {
+  BadRequestError,
+  NotFoundError,
+  UnAuthenticatedError,
+} from '../errors/customErrors.js'
+import { JOB_STATUS, JOB_TYPE, ROLES } from '../utils/constants.js'
 // import BadRequestError from '../errors/customErrors.js'
 import mongoose from 'mongoose'
 import JobModel from '../models/JobModel.js'
+import USerModel from '../models/USerModel.js'
+import { passwordsMatch } from '../utils/passwordBcrypt.js'
 
 const withValidationErrors = (validateValues) => {
   return [
@@ -83,4 +89,52 @@ export const validateIdParams = withValidationErrors([
       if (!job) throw new NotFoundError(`no job with that ${value}`)
     }),
   // .withMessage('the ID is not in the right format'), <= so basically we dont need this one as we are using/doing a our own
+])
+
+export const validateUserInput = withValidationErrors([
+  body('name')
+    .notEmpty()
+    .withMessage('name is required')
+    .isLength({ min: 3 })
+    .withMessage('name must be at least 3 characters')
+    .trim(),
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('Invalidemail format')
+    .custom(async (email) => {
+      const user = await USerModel.findOne({ email }) //so thos email is coming form the body('email'), whatver is the value
+      if (user) throw new BadRequestError('Email already taken')
+    }),
+
+  body('password')
+    .notEmpty()
+    .withMessage('Password location is required')
+    .isLength({ min: 5 })
+    .withMessage('pasword must be at least 5 characters'),
+  body('location')
+    .notEmpty()
+    .withMessage('Location location i srequired')
+    .isLength({ min: 3 })
+    .withMessage('Location must be at least 3 characters'),
+  body('lastName')
+    .notEmpty()
+    .withMessage('Last name is srequired')
+    .isLength({ min: 3 })
+    .withMessage('Last name is srequired'),
+  // body('role').isIn(Object.values(ROLES)).withMessage('Invalid role value'),
+])
+
+export const validateLoginInput = withValidationErrors([
+  body('email')
+    .notEmpty()
+    .withMessage('email is required')
+    .isEmail()
+    .withMessage('Invalidemail format'),
+  body('password')
+    .notEmpty()
+    .withMessage('Password location is required')
+    .isLength({ min: 5 })
+    .withMessage('pasword must be at least 5 characters'),
 ])

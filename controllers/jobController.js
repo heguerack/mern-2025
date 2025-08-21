@@ -5,6 +5,8 @@ import { NotFoundError } from '../errors/customErrors.js'
 // get ALL JOBS
 // get ALL JOBS
 export const getAllJobs = async (req, res) => {
+  console.log('reqUser :', req.user)
+
   const jobs = await JobModel.find({})
   res.status(StatusCodes.OK).json({ jobs })
 }

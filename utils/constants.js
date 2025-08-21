@@ -16,3 +16,8 @@ export const JOBSORT_BY = {
   ASCENDING: 'a-z',
   DESCENDING: 'z-a',
 }
+
+export const ROLES = {
+  USER: 'user',
+  ADMIN: 'admin',
+}

@@ -1,5 +1,5 @@
 import 'express-async-errors'
-
+import cookieParser from 'cookie-parser'
 import express from 'express'
 const app = express()
 import morgan from 'morgan'
@@ -10,14 +10,19 @@ import { config } from 'dotenv'
 config()
 
 import JobRouter from './routes/jobRouter.js'
+import AuthRouter from './routes/AuthRouter.js'
+
 import { errorHandlerMiddleware } from './middleware/errorHandlerMiddleware.js'
 
 // import { body, validationResult } from 'express-validator'
 import { validateTest } from './middleware/validationMiddleware.js'
+import { authenticateUser } from './middleware/authMiddleware.js'
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
+
+app.use(cookieParser()) //we didnt need to install the package to set the cookie, yet we have ot to be able to decode it. we just req.cookies , like  console.log(req.cookies)
 
 app.use(express.json())
 
@@ -26,7 +31,9 @@ app.post('/api/v1/test', validateTest, (req, res) => {
   res.json({ message: `Hello ${name} ` })
 })
 
-app.use('/api/v1/jobs', JobRouter)
+app.use('/api/v1/jobs', authenticateUser, JobRouter)
+
+app.use('/api/v1/auth', AuthRouter)
 
 app.use('*', (req, res) => {
   res.status(404).json({ msg: 'Not Found' })
