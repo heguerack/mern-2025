@@ -8,7 +8,7 @@ import {
   UnAuthenticatedError,
 } from '../errors/customErrors.js'
 
-export const registerUser = async (req, res) => {
+export const register = async (req, res) => {
   const { password } = req.body
   const hashedPassword = await hashPassword(password)
   const user = await USerModel.create({ ...req.body, password: hashedPassword })
@@ -16,7 +16,7 @@ export const registerUser = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ msg: 'User created' })
 }
 
-export const loginUser = async (req, res) => {
+export const login = async (req, res) => {
   const { email, password } = req.body
 
   const user = await USerModel.findOne({ email })
@@ -41,4 +41,13 @@ export const loginUser = async (req, res) => {
   })
 
   res.status(StatusCodes.OK).json({ msg: 'User logged in' })
+}
+
+export const logout = async (req, res) => {
+  res.cookie('token', 'autoExpiringToken', {
+    // so just just dont return a token anymore
+    httpOnly: true,
+    expires: new Date(Date.now()), // now, not now + oneDay
+  })
+  res.status(StatusCodes.OK).json({ msg: 'User logged out' })
 }

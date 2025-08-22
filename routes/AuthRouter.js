@@ -1,20 +1,17 @@
 import { Router } from 'express'
 
-import {
-  validateLoginInput,
-  validateUserInput,
-} from '../middleware/validationMiddleware.js'
-import { loginUser, registerUser } from '../controllers/AuthController.js'
-
-// import { createJobValidation } from '../middleware/validationMiddleware.js'
+// import { validateLoginInput } from '../middleware/validationMiddleware.js'
+import { login, logout, register } from '../controllers/AuthController.js'
+// import { validateRegister } from '../middleware/middewareValidations/validateRegister.js'
+import { validateLoginInput } from '../middleware/middewareValidations/validateLoginInput.js'
+import { validateRegisterInput } from '../middleware/middewareValidations/validateRegisterInput.js'
+// import { validateUserInput } from '../middleware/middewareValidations/validateUserInput.js'
 
 const router = Router()
 
 router
-  // .route('/')
-  // .post(validateUserInput, registerUser)
-  // .post(validateUserInput, loginUser)
-  .post('/register', validateUserInput, registerUser)
-  .post('/login', validateLoginInput, loginUser)
+  .post('/register', validateRegisterInput, register)
+  .post('/login', validateLoginInput, login)
+  .get('/logout', logout)
 
 export default router

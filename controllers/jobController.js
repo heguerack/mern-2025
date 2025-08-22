@@ -1,13 +1,36 @@
 import { StatusCodes } from 'http-status-codes'
 import JobModel from '../models/JobModel.js'
-import { NotFoundError } from '../errors/customErrors.js'
+import {
+  BadRequestError,
+  NotFoundError,
+  UnUNAUTHORIZEDError,
+} from '../errors/customErrors.js'
 
+// Create JOB  -  Create JOB
+// Create JOB  -  Create JOB
+// Create JOB  -  Create JOB
+// Create JOB  -  Create JOB
+export const createJob = async (req, res) => {
+  const { userId } = req.user //new
+
+  // const job = await JobModel.create(req.body)
+  const job = await JobModel.create({ ...req.body, createdBy: userId })
+
+  res.status(StatusCodes.CREATED).json({ job })
+}
+
+// get ALL JOBS
+// get ALL JOBS
 // get ALL JOBS
 // get ALL JOBS
 export const getAllJobs = async (req, res) => {
   console.log('reqUser :', req.user)
+  // const jobs = await JobModel.find({})
 
-  const jobs = await JobModel.find({})
+  // created by
+  const jobs = await JobModel.find({ createdBy: req.user.userId })
+  console.log('jobsReqUser :', jobs)
+
   res.status(StatusCodes.OK).json({ jobs })
 }
 
@@ -16,16 +39,7 @@ export const getAllJobs = async (req, res) => {
 export const getSingleJob = async (req, res) => {
   const { id } = req.params
   const job = await JobModel.findById(id)
-  // no now this kind of error is gonn a be taken care of my the middle, so we check the id
-  // if (!job) throw new NotFoundError(`no job with that ${id}`)
   res.status(StatusCodes.OK).json({ job })
-}
-
-// Create JOB  -  Create JOB
-// Create JOB  -  Create JOB
-export const createJob = async (req, res) => {
-  const job = await JobModel.create(req.body)
-  res.status(StatusCodes.CREATED).json({ job })
 }
 
 // Delele JOB - Delele JOB

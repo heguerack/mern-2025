@@ -7,10 +7,8 @@ import {
   deleteJob,
   updateJob,
 } from '../controllers/jobController.js'
-import {
-  validateIdParams,
-  validateJobInput,
-} from '../middleware/validationMiddleware.js'
+import { validateJobInput } from '../middleware/middewareValidations/validateJobInput.js'
+import { validateIdParams } from '../middleware/middewareValidations/validateIdParams.js'
 // import { createJobValidation } from '../middleware/validationMiddleware.js'
 
 const router = Router()

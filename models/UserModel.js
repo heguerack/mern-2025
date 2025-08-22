@@ -23,5 +23,12 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
+// this logic will remove the password from the response
+UserSchema.methods.removePassword = function () {
+  // have to diginto this logic. tey i would do it, i wouldstringity, remove item and conver back to json so that no confusion on the fron end
+  let obj = this.toObject()
+  delete obj.password
+  return obj
+}
 // So basically here weare creating the fisrt table
 export default mongoose.model('User', UserSchema)

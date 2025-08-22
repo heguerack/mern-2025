@@ -23,7 +23,7 @@ const JobSchema = new mongoose.Schema(
       type: String,
       default: 'my city',
     },
-    createdBY: {
+    createdBy: {
       type: mongoose.Types.ObjectId, // just checking is the tyoe mooogose id.
       ref: USerModel,
     },

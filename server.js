@@ -11,13 +11,11 @@ config()
 
 import JobRouter from './routes/jobRouter.js'
 import AuthRouter from './routes/AuthRouter.js'
+import userRouter from './routes/userRouter.js'
 
 import { errorHandlerMiddleware } from './middleware/errorHandlerMiddleware.js'
 
-// import { body, validationResult } from 'express-validator'
-import { validateTest } from './middleware/validationMiddleware.js'
 import { authenticateUser } from './middleware/authMiddleware.js'
-
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
@@ -26,13 +24,11 @@ app.use(cookieParser()) //we didnt need to install the package to set the cookie
 
 app.use(express.json())
 
-app.post('/api/v1/test', validateTest, (req, res) => {
-  const { name } = req.body
-  res.json({ message: `Hello ${name} ` })
+app.get('/api/v1/test', (req, res) => {
+  res.status(200).json({ msg: 'your data from test route' })
 })
-
 app.use('/api/v1/jobs', authenticateUser, JobRouter)
-
+app.use('/api/v1/users', authenticateUser, userRouter)
 app.use('/api/v1/auth', AuthRouter)
 
 app.use('*', (req, res) => {
