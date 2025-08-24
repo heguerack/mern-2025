@@ -17,7 +17,7 @@ git push -u origin main
 git branch
 git checkout main
 git add .
-git commit -m "08:105 - user modal,roter,controllers, and authentication with JWT and cookies "
+git commit -m "09:116 - added more user routes, proxy set up, ans axios base url "
 git push -u origin main
 ```
 
@@ -26,8 +26,8 @@ git push -u origin main
 - -donbt forget to puch to the new branch
 
 ```ts
-git checkout -b 08-dev
-git push -u origin 08-dev
+git checkout -b 09-dev
+git push -u origin 09-dev
 ```
 
 - Now swith to main and pull from github

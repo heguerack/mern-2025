@@ -1,15 +1,39 @@
-import { Outlet } from 'react-router-dom'
+import {
+  Outlet,
+  redirect,
+  useLoaderData,
+  useNavigate,
+  useNavigation,
+} from 'react-router-dom'
 import Wrapper from '../assets/wrappers/Dashboard'
 import SmallSidebar from '../components/SmallSidebar'
 import BigSidebar from '../components/BigSidebar'
 import Navbar from '../components/Navbar'
 import { createContext, useContext, useEffect, useState } from 'react'
+import { customFetch } from '../utils/customFetch'
+import { toast } from 'react-toastify'
+
+export const dashboardLoader = async () => {
+  try {
+    const currentUser = await customFetch.get('users/current-user')
+    return currentUser
+  } catch (error) {
+    toast.error(error?.response?.data?.msg)
+    console.log(error)
+    return error
+  }
+}
 
 const DashboardContext = createContext()
 
 export default function DashboardLayout() {
+  const navigate = useNavigate()
+
+  const response = useLoaderData()
+  const currentUser = response.data
+
   //temp data
-  const user = { name: 'Frank' }
+  const user = currentUser
   const [showSidebar, setShowSidebar] = useState(false)
   const [isDarkTheme, setIsDarkTheme] = useState(false)
 
@@ -32,11 +56,14 @@ export default function DashboardLayout() {
     setShowSidebar(!showSidebar)
     console.log(showSidebar)
   }
-
+  //cuz im not sending nor receiving data then regular call?
   const logoutUser = async () => {
-    console.log('logout user')
+    // so i cant grab the useNavigate from here???
+    // const navigate = useNavigate()
+    navigate('/login')
+    await customFetch.get('/auth/logout')
+    toast.success('User loggged out succesfully')
   }
-
   return (
     <DashboardContext.Provider
       value={{
@@ -54,7 +81,7 @@ export default function DashboardLayout() {
           <div className=''>
             <Navbar />
             <div className='dashboard-page'>
-              <Outlet />
+              <Outlet context={{ user }} />
             </div>
           </div>
         </main>

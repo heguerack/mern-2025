@@ -7,7 +7,7 @@ import NavLinks from './NavLinks'
 // import links from '../utils/links'
 
 export default function SmallSidebar() {
-  console.log(links)
+  // console.log(links)
   const { toggleSidebar, showSidebar } = useDashboardContext()
   // if (showSidebar) {
   return (

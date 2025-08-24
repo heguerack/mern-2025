@@ -5,6 +5,8 @@ import {
   NotFoundError,
   UnUNAUTHORIZEDError,
 } from '../../errors/customErrors.js'
+import mongoose from 'mongoose'
+import JobModel from '../../models/JobModel.js'
 
 export const validateIdParams = withValidationErrors([
   param('id').custom(async (value, { req }) => {

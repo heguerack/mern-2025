@@ -26,9 +26,15 @@ export const createJob = async (req, res) => {
 export const getAllJobs = async (req, res) => {
   console.log('reqUser :', req.user)
   // const jobs = await JobModel.find({})
+  console.log('role getAllAJobs:', req.user.role)
 
-  // created by
-  const jobs = await JobModel.find({ createdBy: req.user.userId })
+  let jobs
+  if (req.user.role === 'admin') {
+    jobs = await JobModel.find({})
+  } else {
+    jobs = await JobModel.find({ createdBy: req.user.userId })
+  }
+
   console.log('jobsReqUser :', jobs)
 
   res.status(StatusCodes.OK).json({ jobs })
@@ -47,7 +53,7 @@ export const getSingleJob = async (req, res) => {
 export const deleteJob = async (req, res) => {
   const { params } = req
   const deletedJob = await JobModel.findByIdAndDelete(params.id)
-  res.status(StatusCodes.OK).json({ msg: 'Job deleted' }, deletedJob)
+  res.status(StatusCodes.OK).json({ msg: 'Job deleted' })
 }
 
 // Update JOB - Update JOB
@@ -58,5 +64,5 @@ export const updateJob = async (req, res) => {
     new: true,
   })
 
-  res.status(StatusCodes.OK).json({ message: 'Job Updated', updatedJob })
+  res.status(StatusCodes.OK).json(updatedJob)
 }

@@ -3892,7 +3892,7 @@ const DashboardLayout = () => {
 pages/AddJob.jsx
 
 ```js
-import { FormRow } from '../components'
+import { FormRow } from '../components'~~~~
 import Wrapper from '../assets/wrappers/DashboardFormPage'
 import { useOutletContext } from 'react-router-dom'
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants'

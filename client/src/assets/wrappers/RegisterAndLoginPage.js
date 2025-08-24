@@ -1,9 +1,12 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 const Wrapper = styled.section`
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  display: grid;
+  background-color: red;
   align-items: center;
+  /*  justify-content: center; */
   .logo {
     display: block;
     margin: 0 auto;
@@ -15,20 +18,20 @@ const Wrapper = styled.section`
   }
   h4 {
     text-align: center;
-    margin-bottom: 1.38rem;
+    margin-bottom: 1rem;
   }
   p {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     text-align: center;
-    line-height: 1.5;
+    line-height: 1.4;
   }
   .btn {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
   }
   .member-btn {
     color: var(--primary-500);
     letter-spacing: var(--letter-spacing);
     margin-left: 0.25rem;
   }
-`;
-export default Wrapper;
+`
+export default Wrapper

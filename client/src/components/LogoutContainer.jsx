@@ -18,7 +18,9 @@ export default function LogoutContainer() {
         {user?.name}
       </button>
       <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>
-        <button className='dropdown-btn'>logout</button>
+        <button className='dropdown-btn' onClick={logoutUser}>
+          logout
+        </button>
       </div>
     </Wrapper>
   )
