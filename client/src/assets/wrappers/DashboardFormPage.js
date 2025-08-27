@@ -1,10 +1,33 @@
-import styled from 'styled-components';
-
+import styled from 'styled-components'
 const Wrapper = styled.section`
   border-radius: var(--border-radius);
   width: 100%;
   background: var(--background-secondary-color);
+
   padding: 3rem 2rem 4rem;
+  padding-bottom: 0.5rem;
+  /* .bounce-input-warpper {
+    margin-top: 2rem;
+  } */
+  .bounce-input {
+    background-color: black;
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    color: white;
+  }
+  .bounce-button {
+    margin-left: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
+    color: white;
+    background: teal;
+  }
+  .bounceTime {
+    margin-top: 1rem;
+  }
+  .reset-values-wrapper {
+    display: inline-block;
+  }
   .form-title {
     margin-bottom: 2rem;
   }
@@ -41,6 +64,6 @@ const Wrapper = styled.section`
       grid-template-columns: 1fr 1fr 1fr;
     }
   }
-`;
+`
 
-export default Wrapper;
+export default Wrapper

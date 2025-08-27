@@ -15,7 +15,7 @@ export const adminLoader = async () => {
     const res = await customFetch.get('/users/admin/app-stats')
     console.log('data :', res.data)
 
-    toast.success('users and jobs on board!')
+    // toast.success('users and jobs on board!')
 
     return res.data
   } catch (error) {

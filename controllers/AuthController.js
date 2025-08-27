@@ -1,17 +1,16 @@
 import { StatusCodes } from 'http-status-codes'
-
-import USerModel from '../models/USerModel.js'
 import { hashPassword, passwordsMatch } from '../utils/passwordBcrypt.js'
 import { createJWT } from '../utils/jwtToken.js'
 import {
   BadRequestError,
   UnAuthenticatedError,
 } from '../errors/customErrors.js'
+import UserModel from '../models/USerModel.js'
 
 export const register = async (req, res) => {
   const { password } = req.body
   const hashedPassword = await hashPassword(password)
-  const user = await USerModel.create({ ...req.body, password: hashedPassword })
+  const user = await UserModel.create({ ...req.body, password: hashedPassword })
 
   res.status(StatusCodes.CREATED).json({ msg: 'User created' })
 }
@@ -19,7 +18,7 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password } = req.body
 
-  const user = await USerModel.findOne({ email })
+  const user = await UserModel.findOne({ email })
   if (!user) throw new UnAuthenticatedError('Not user with that email')
 
   const passwordsMatched = await passwordsMatch(password, user.password)

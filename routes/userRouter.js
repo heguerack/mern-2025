@@ -5,7 +5,11 @@ import {
   updateUser,
 } from '../controllers/userController.js'
 import { validateUpdateUserInput } from '../middleware/middewareValidations/validateUpdateUserInput.js'
-import { authorizePermissionsMiddleware } from '../middleware/authMiddleware.js'
+import {
+  authorizePermissionsMiddleware,
+  checkForTestuser,
+} from '../middleware/authMiddleware.js'
+import { upload } from '../middleware/multerMiddleware.js'
 
 const router = Router()
 
@@ -15,6 +19,13 @@ router.get(
   authorizePermissionsMiddleware('admin'),
   getApplicationStats
 )
-router.patch('/update-user', validateUpdateUserInput, updateUser)
+router.patch(
+  '/update-user',
+  checkForTestuser,
+  //remeber, the 'avatar' name was given in the profile action on the fornt end
+  upload.single('avatar'),
+  validateUpdateUserInput,
+  updateUser
+)
 
 export default router

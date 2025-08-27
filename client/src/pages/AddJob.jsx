@@ -1,18 +1,11 @@
-import {
-  Form,
-  redirect,
-  // useActionData,
-  useNavigation,
-  useOutletContext,
-} from 'react-router-dom'
+import { Form, redirect, useOutletContext } from 'react-router-dom'
 import Wrapper from '../assets/wrappers/DashboardFormPage'
 import FormRow from '../components/FormRow'
 import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants'
 import FormSelect from '../components/FormSelect'
 import { customFetch } from '../utils/customFetch'
-import { useRef } from 'react'
-import { useEffect } from 'react'
 import { toast } from 'react-toastify'
+import SubmitBtn from '../components/SubmitBtn '
 
 export const addJobAction = async ({ request }) => {
   const formData = await request.formData()
@@ -29,19 +22,6 @@ export const addJobAction = async ({ request }) => {
 
 export default function AddJob() {
   const { user } = useOutletContext()
-  const navigation = useNavigation()
-  const isSubmitting = navigation.state === 'submitting'
-
-  // const formRef = useRef(null)
-  // const actionData = useActionData()
-  // this is if we decide to stay in the fpage to add another job
-  // resets only on success
-  // useEffect(() => {
-  //   if (actionData?.success && formRef.current) {
-  //     toast.success('Job created!!')
-  //     formRef.current.reset()
-  //   }
-  // }, [actionData])
 
   return (
     <Wrapper>
@@ -55,20 +35,19 @@ export default function AddJob() {
             type='text'
             labelText='job location'
             name='jobLocation'
-            defaultValue={user.location}
+            defaultValue={user?.location}
           />
           <FormSelect
             label='Job Status'
             name='jobStatus'
-            valuesObject={JOB_STATUS}
+            valuesArray={Object.values(JOB_STATUS)}
           />
-          <FormSelect label='Job Type' name='jobType' valuesObject={JOB_TYPE} />
-          <button
-            type='submit'
-            className='btn btn-block form-btn '
-            disabled={isSubmitting}>
-            {isSubmitting ? 'submitting...' : 'submit'}
-          </button>
+          <FormSelect
+            label='Job Type'
+            name='jobType'
+            valuesArray={Object.values(JOB_TYPE)}
+          />
+          <SubmitBtn formBtn />
         </div>
       </Form>
     </Wrapper>

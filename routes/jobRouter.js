@@ -6,20 +6,27 @@ import {
   createJob,
   deleteJob,
   updateJob,
+  showStats,
 } from '../controllers/jobController.js'
 import { validateJobInput } from '../middleware/middewareValidations/validateJobInput.js'
 import { validateIdParams } from '../middleware/middewareValidations/validateIdParams.js'
+import { checkForTestuser } from '../middleware/authMiddleware.js'
 // import { createJobValidation } from '../middleware/validationMiddleware.js'
 
 const router = Router()
 
-router.route('/').get(getAllJobs).post(validateJobInput, createJob)
+router
+  .route('/')
+  .get(getAllJobs)
+  .post(checkForTestuser, validateJobInput, createJob)
+
+router.route('/stats').get(showStats)
 
 router
-  .route('/:id')
+  .route('/:id') //:id has to be the last route
   .get(validateIdParams, getSingleJob)
-  .patch(validateJobInput, validateIdParams, updateJob)
-  .delete(validateIdParams, deleteJob)
+  .patch(checkForTestuser, validateJobInput, validateIdParams, updateJob)
+  .delete(checkForTestuser, validateIdParams, deleteJob)
 
 // very importan we must exoport the router!
 export default router

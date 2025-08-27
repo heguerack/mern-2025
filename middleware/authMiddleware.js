@@ -1,4 +1,5 @@
 import {
+  BadRequestError,
   UnAuthenticatedError,
   UnUNAUTHORIZEDError,
 } from '../errors/customErrors.js'
@@ -8,16 +9,19 @@ export const authenticateUser = async (req, res, next) => {
   const { token } = req.cookies
 
   if (!token) {
-    throw new UnAuthenticatedError('You are unauthenticated, should not pass')
+    throw new UnAuthenticatedError('Auhentication Invalid, not token')
   }
   try {
     const data = verifyJWT(token)
-
     const { userId, role } = data
-    req.user = { userId, role } // and ehre we can injected to the req! , to be used in
+    const testUser = userId === '68ac6473e7762905a2caaee3' // so just like isSubmitting this become a boolean
 
+    req.user = { userId, role, testUser } // and ehre we can injected to the req.user! , to be used in
+    console.log('authMiddleware @ authenticateUser: ', req.user)
     next()
-  } catch (error) {}
+  } catch (error) {
+    throw new UnAuthenticatedError('Auhentication Invalid, error')
+  }
 }
 
 export const authorizePermissionsMiddleware = (data) => {
@@ -25,4 +29,9 @@ export const authorizePermissionsMiddleware = (data) => {
     if (data !== req.user.role) throw new UnUNAUTHORIZEDError('Not authorized')
     next()
   }
+}
+
+export const checkForTestuser = (req, res, next) => {
+  if (req.user.testUser) throw new BadRequestError('Demo user. Read Only!!')
+  next()
 }

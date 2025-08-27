@@ -7,7 +7,7 @@ export default function NavLinks({ toggleSidebar }) {
 
   const urserLinks = links.filter((link) => link.text !== 'admin')
 
-  const navLinks = user.role === 'admin' ? links : urserLinks
+  const navLinks = user?.role === 'admin' ? links : urserLinks
 
   return (
     <div className='nav-links'>

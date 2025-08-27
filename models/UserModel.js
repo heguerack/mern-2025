@@ -19,6 +19,8 @@ const UserSchema = new mongoose.Schema(
       enum: Object.values(ROLES),
       default: ROLES.USER,
     },
+    avatar: String,
+    avatasPublicId: String,
   },
   { timestamps: true }
 )
@@ -31,4 +33,8 @@ UserSchema.methods.removePassword = function () {
   return obj
 }
 // So basically here weare creating the fisrt table
-export default mongoose.model('User', UserSchema)
+// export default mongoose.model('User', UserSchema)
+// Prevent OverwriteModelError// fixes the hot ralod isse /thing
+const User = mongoose.models.User || mongoose.model('User', UserSchema)
+
+export default User

@@ -17,7 +17,7 @@ git push -u origin main
 git branch
 git checkout main
 git add .
-git commit -m "09:116 - added more user routes, proxy set up, ans axios base url "
+git commit -m "10:144 - front end, register, dashboard, login,jobs, and admin pages "
 git push -u origin main
 ```
 
@@ -26,8 +26,8 @@ git push -u origin main
 - -donbt forget to puch to the new branch
 
 ```ts
-git checkout -b 09-dev
-git push -u origin 09-dev
+git checkout -b 10-dev
+git push -u origin 10-dev
 ```
 
 - Now swith to main and pull from github

@@ -14,7 +14,11 @@ export default function LogoutContainer() {
         className='btn logout-btn'
         onClick={() => setShowLogout(!showLogout)}>
         {/* <FaAlignLeft /> */}
-        <FaUserCircle />
+        {user?.avatar ? (
+          <img src={user.avatar} alt='avatar' className='img' />
+        ) : (
+          <FaUserCircle />
+        )}
         {user?.name}
       </button>
       <div className={showLogout ? 'dropdown show-dropdown' : 'dropdown'}>

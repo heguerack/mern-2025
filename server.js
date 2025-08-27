@@ -4,24 +4,29 @@ import express from 'express'
 const app = express()
 import morgan from 'morgan'
 import mongoose from 'mongoose'
-
+import cloudinary from 'cloudinary'
 import { config } from 'dotenv'
-
 config()
-
 import JobRouter from './routes/jobRouter.js'
 import AuthRouter from './routes/AuthRouter.js'
 import userRouter from './routes/userRouter.js'
-
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
+import path from 'path'
 import { errorHandlerMiddleware } from './middleware/errorHandlerMiddleware.js'
-
 import { authenticateUser } from './middleware/authMiddleware.js'
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLODINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+})
+const __dirname = dirname(fileURLToPath(import.meta.url)) //need to find how how thos works, wt hech,, always some new syntax to leanr
+app.use(express.static(path.resolve(__dirname, './public')))
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
 }
-
-app.use(cookieParser()) //we didnt need to install the package to set the cookie, yet we have ot to be able to decode it. we just req.cookies , like  console.log(req.cookies)
-
+app.use(cookieParser())
 app.use(express.json())
 
 app.get('/api/v1/test', (req, res) => {
