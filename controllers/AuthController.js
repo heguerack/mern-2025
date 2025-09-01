@@ -5,7 +5,7 @@ import {
   BadRequestError,
   UnAuthenticatedError,
 } from '../errors/customErrors.js'
-import UserModel from '../models/temp.js'
+import UserModel from '../models/UserModel.js'
 
 export const register = async (req, res) => {
   const { password } = req.body
