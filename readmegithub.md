@@ -17,7 +17,7 @@ git push -u origin main
 git branch
 git checkout main
 git add .
-git commit -m "11:179 - front end, register, dashboard, login,jobs, and admin pages "
+git commit -m "fixed USermoidel to UserModel"
 git push -u origin main
 ```
 
@@ -26,8 +26,8 @@ git push -u origin main
 - -donbt forget to puch to the new branch
 
 ```ts
-git checkout -b 11-fisrt-deploy
-git push -u origin 11-fisrt-deploy
+git checkout -b deploy-v1
+git push -u origin deploy-v1
 ```
 
 - Now swith to main and pull from github
