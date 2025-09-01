@@ -1,7 +1,7 @@
 import { body } from 'express-validator'
 import { BadRequestError } from '../../errors/customErrors.js'
 
-import USerModel from '../../models/USerModel.js'
+import USerModel from '../../models/temp.js'
 import { withValidationErrors } from './mainValidationFunction.js'
 
 export const validateRegisterInput = withValidationErrors([

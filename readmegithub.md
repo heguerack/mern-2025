@@ -17,7 +17,7 @@ git push -u origin main
 git branch
 git checkout main
 git add .
-git commit -m "10:144 - front end, register, dashboard, login,jobs, and admin pages "
+git commit -m "11:179 - front end, register, dashboard, login,jobs, and admin pages "
 git push -u origin main
 ```
 
@@ -26,8 +26,8 @@ git push -u origin main
 - -donbt forget to puch to the new branch
 
 ```ts
-git checkout -b 10-dev
-git push -u origin 10-dev
+git checkout -b 11-fisrt-deploy
+git push -u origin 11-fisrt-deploy
 ```
 
 - Now swith to main and pull from github

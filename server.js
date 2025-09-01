@@ -20,6 +20,7 @@ cloudinary.config({
   api_key: process.env.CLODINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
+
 const __dirname = dirname(fileURLToPath(import.meta.url)) //need to find how how thos works, wt hech,, always some new syntax to leanr
 app.use(express.static(path.resolve(__dirname, './public')))
 
@@ -32,9 +33,15 @@ app.use(express.json())
 app.get('/api/v1/test', (req, res) => {
   res.status(200).json({ msg: 'your data from test route' })
 })
+
 app.use('/api/v1/jobs', authenticateUser, JobRouter)
 app.use('/api/v1/users', authenticateUser, userRouter)
 app.use('/api/v1/auth', AuthRouter)
+
+// this is really for all the get routes, not server apis but regular comuncation to the fron end get requests. so cabically here we connect front and back end. basically we are sending the index html file we have so that react does its thing.
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, './public', 'index.html'))
+})
 
 app.use('*', (req, res) => {
   res.status(404).json({ msg: 'Not Found' })

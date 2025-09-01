@@ -4,7 +4,7 @@ import {
   UnAuthenticatedError,
 } from '../../errors/customErrors.js'
 
-import USerModel from '../../models/USerModel.js'
+import USerModel from '../../models/temp.js'
 import { withValidationErrors } from './mainValidationFunction.js'
 import { passwordsMatch } from '../../utils/passwordBcrypt.js'
 

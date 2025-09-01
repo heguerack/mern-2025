@@ -44,8 +44,8 @@ export default function Login() {
       <Form method='post' className='form'>
         <Logo />
         <h4>Login</h4>
-        <FormRow type='email' name='email' defaultValue='' />
-        <FormRow type='password' name='password' defaultValue='' />
+        <FormRow type='email' name='email' />
+        <FormRow type='password' name='password' />
         <SubmitBtn />
         <button type='button' className='btn btn-block' onClick={loginDemoUser}>
           Explore as Admin

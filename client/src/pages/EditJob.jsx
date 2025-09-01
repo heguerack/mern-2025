@@ -57,14 +57,12 @@ export default function EditJob() {
           <FormSelect
             name='jobStatus'
             labelText='job status'
-            // defaultValue={job.jobStatus}
-            valuesObject={JOB_STATUS}
+            valuesArray={Object.values(JOB_STATUS)}
           />
           <FormSelect
             name='jobType'
             label='job type'
-            // defaultValue={job.jobType}
-            valuesObject={JOB_TYPE}
+            valuesArray={Object.values(JOB_TYPE)}
           />
           <SubmitBtn formBtn />
         </div>

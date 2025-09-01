@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 import { JOB_STATUS, JOB_TYPE } from '../utils/constants.js'
-import USerModel from './USerModel.js'
+import USerModel from './temp.js'
 
 const JobSchema = new mongoose.Schema(
   {
